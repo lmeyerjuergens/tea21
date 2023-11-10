@@ -11,6 +11,10 @@ auto main(int argc, char **argv) -> int
      * More info at https://github.com/CLIUtils/CLI11#usage
      */
     CLI::App app{PROJECT_NAME};
+
+    int count = 20;
+    app.add_option("-c,--count", count, "Specify the count")->check(CLI::PositiveNumber);
+
     try
     {
         app.set_version_flag("-V,--version", fmt::format("{} {}", PROJECT_VER, PROJECT_BUILD_DATE));
@@ -27,6 +31,8 @@ auto main(int argc, char **argv) -> int
      * More info at https://fmt.dev/latest/api.html
      */
     fmt::print("Hello, {}!\n", app.get_name());
+
+    fmt::print("Count: {}\n", count);
 
     /* INSERT YOUR CODE HERE */
 
