@@ -13,7 +13,7 @@ auto main(int argc, char **argv) -> int
     CLI::App app{PROJECT_NAME};
 
     int count = 20;
-    app.add_option("-c,--count", count, "Specify the count")->check(CLI::PositiveNumber);
+    app.add_option("-c,--count", count, "Specify the count");
 
     try
     {
@@ -31,10 +31,12 @@ auto main(int argc, char **argv) -> int
      * More info at https://fmt.dev/latest/api.html
      */
     fmt::print("Hello, {}!\n", app.get_name());
-
     fmt::print("Count: {}\n", count);
 
-    /* INSERT YOUR CODE HERE */
+    std::vector<int> randomNumbers(count);
+    for (int &num : randomNumbers) {
+        num = std::rand() % 100 + 1;
+    }
 
     return 0; /* exit gracefully*/
 }
