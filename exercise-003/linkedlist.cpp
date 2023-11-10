@@ -2,76 +2,136 @@
 
 LinkedList::~LinkedList()
 {
-  for (auto tmp = m_head; tmp != nullptr; tmp = tmp->pNext /* prepare the next in the row */) {
-    auto elem = tmp; /* save the element to be deleted */
-    delete elem;
-  }
+    for (auto tmp = m_head; tmp != nullptr; tmp = tmp->pNext)
+    {
+        auto elem = tmp;
+        delete elem;
+    }
 }
 
 bool LinkedList::insert_tail(LinkedListNode *node)
 {
-  bool ret = false;
-  if (nullptr == node) {
+    bool ret = false;
+    if (nullptr == node)
+    {
+        return ret;
+    }
+
+    if (m_tail == nullptr)
+    {
+        m_head = m_tail = node;
+    }
+    else
+    {
+        m_tail->pNext = node;
+        m_tail = node;
+    }
+
+    ret = true;
     return ret;
-  }
-  // insert your code here....
-  return ret;
 }
 
 bool LinkedList::insert_head(LinkedListNode *node)
 {
-  bool ret = false;
-  if (nullptr == node) {
+    bool ret = false;
+    if (nullptr == node)
+    {
+        return ret;
+    }
+
+    if (m_head == nullptr)
+    {
+        m_head = m_tail = node;
+    }
+    else
+    {
+        node->pNext = m_head;
+        m_head = node;
+    }
+
+    ret = true;
     return ret;
-  }
-  // insert your code here....
-  return ret;
 }
 
 bool LinkedList::insert_after(LinkedListNode *loc, LinkedListNode *node)
 {
-  bool ret = false;
-  if ((nullptr == loc) || (nullptr == node)) {
+    bool ret = false;
+    if ((nullptr == loc) || (nullptr == node))
+    {
+        return ret;
+    }
+    node->pNext = loc->pNext;
+    loc->pNext = node;
+
+    if (loc == m_tail)
+    {
+        m_tail = node;
+    }
+
+    ret = true;
     return ret;
-  }
-  // insert your code here ....
-  return ret;
 }
 
 bool LinkedList::insert_before(LinkedListNode *loc, LinkedListNode *node)
 {
-  bool ret = false;
-  if ((nullptr == loc) || (nullptr == node)) {
+    bool ret = false;
+    if ((nullptr == loc) || (nullptr == node))
+    {
+        return ret;
+    }
+    if (loc == m_head)
+    {
+        node->pNext = m_head;
+        m_head = node;
+    }
+    else
+    {
+        auto tmp = m_head;
+        while (tmp->pNext != loc)
+        {
+            tmp = tmp->pNext;
+        }
+
+        tmp->pNext = node;
+        node->pNext = loc;
+    }
+
+    ret = true;
     return ret;
-  }
-  // Insert your code here....
-  return ret;
 }
 
 bool LinkedList::remove(LinkedListNode *node)
 {
-  bool ret = false;
-  // insert your code here ...
-  return ret;
-}
+    bool ret = false;
+    if (node == nullptr)
+    {
+        return ret;
+    }
 
-size_t LinkedList::size()
-{
-  size_t count = 0;
-  /* using a lambda to count objects in the list*/
-  traverse([&count](LinkedListNode *node) { count++; });
-  return count;
-}
+    if (node == m_head)
+    {
+        m_head = node->pNext;
+        if (m_head == nullptr)
+        {
+            m_tail = nullptr;
+        }
+    }
+    else
+    {
+        auto tmp = m_head;
+        while (tmp->pNext != node)
+        {
+            tmp = tmp->pNext;
+        }
+        tmp->pNext = node->pNext;
 
+        if (node == m_tail)
+        {
+            m_tail = tmp;
+        }
+    }
 
-void LinkedList::traverse(std::function<void(const std::string &)> func)
-{
-  traverse([&](LinkedListNode *node) { func(node->m_name); });
-}
-
-void LinkedList::traverse(std::function<void(LinkedListNode *node)> func)
-{
-  for (auto tmp = m_head; tmp != nullptr; tmp = tmp->pNext) {
-    func(tmp);
-  }
+    delete node;
+    ret = true;
+    return ret;
 }
