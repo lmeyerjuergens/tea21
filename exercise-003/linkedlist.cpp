@@ -9,6 +9,7 @@ LinkedList::~LinkedList()
     }
 }
 
+
 bool LinkedList::insert_tail(LinkedListNode *node)
 {
     bool ret = false;
@@ -135,3 +136,24 @@ bool LinkedList::remove(LinkedListNode *node)
     ret = true;
     return ret;
 }
+size_t LinkedList::size()
+{
+  size_t count = 0;
+  /* using a lambda to count objects in the list*/
+  traverse([&count](LinkedListNode *node) { count++; });
+  return count;
+}
+
+
+void LinkedList::traverse(std::function<void(const std::string &)> func)
+{
+  traverse([&](LinkedListNode *node) { func(node->m_name); });
+}
+
+void LinkedList::traverse(std::function<void(LinkedListNode *node)> func)
+{
+  for (auto tmp = m_head; tmp != nullptr; tmp = tmp->pNext) {
+    func(tmp);
+  }
+}
+
