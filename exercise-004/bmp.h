@@ -2,7 +2,7 @@
 #define TEA21_EXERCISE_004_BMP_H
 
 #include <string>
-#include <vector>  // Include vector header
+#include <vector>
 
 class BMP {
 public:
@@ -24,6 +24,7 @@ private:
     };
 
     struct BitmapInfoHeader {
+        char biType[2] = {'X','X'};
         uint32_t biSize = 0;
         int32_t biWidth = 0;
         int32_t biHeight = 0;
@@ -35,6 +36,7 @@ private:
         int32_t biYPelsPerMeter = 0;
         uint32_t biClrUsed = 0;
         uint32_t biClrImportant = 0;
+        void print();
     };
 
     struct RGBA {

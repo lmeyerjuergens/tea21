@@ -53,6 +53,7 @@ bool BMP::read(const std::string& filename) {
     }
 
     m_fileHeader.print();
+    m_infoHeader.print();
     return true;
 }
 
@@ -63,10 +64,25 @@ bool BMP::write(const std::string& filename) {
 }
 
 void BMP::BitmapFileHeader::print() {
-    fmt::println("======= The Bitmap File Info Header =======");
+    fmt::println("======= The Bitmap File Header =======");
     fmt::println("  > The start: {}{}", bfType[0], bfType[1]);
     fmt::println("  > The size in bytes: {}", bfSize);
     fmt::println("  > The offset in bits: {}", bfOffBits);
+}
+
+void BMP::BitmapInfoHeader::print() {
+    fmt::println("======= The Bitmap Info Header =======");
+    fmt::println("  > biSize: {}", biSize);
+    fmt::println("  > biWidth: {}", biWidth);
+    fmt::println("  > biHeight: {}", biHeight);
+    fmt::println("  > biPlanes: {}", biPlanes);
+    fmt::println("  > biBitCount: {}", biBitCount);
+    fmt::println("  > biCompression: {}", biCompression);
+    fmt::println("  > biSizeImage: {}", biSizeImage);
+    fmt::println("  > biXPelsPerMeter: {}", biXPelsPerMeter);
+    fmt::println("  > biYPelsPerMeter: {}", biYPelsPerMeter);
+    fmt::println("  > biClrUsed: {}", biClrUsed);
+    fmt::println("  > biClrImportant: {}", biClrImportant);
 }
 
 template<typename T>
